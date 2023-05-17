@@ -44,8 +44,18 @@ ent_three = ttk.Entry(frm_positive, font=("Trebuchet MS", 8), width=32)
 ent_three.grid(row=2, column=1, pady=2)
 
 frm_mindset = ttk.LabelFrame(frm_today, text=" Positivt mindset inför morgondagen ", padding=10)
-frm_mindset.grid(row=4, column=0, rowspan=2, sticky="nsew", pady=5)
+frm_mindset.grid(row=4, column=0, rowspan=2, sticky="nsew")
 txt_mindset = tk.Text(frm_mindset, height=2, width=35, font=("Trebuchet MS", 8))
 txt_mindset.grid(row=0, column=0)
+
+# Andra kolumnen
+frm_notes = ttk.LabelFrame(frm_today, text=" Dagboksanteckningar ", padding=10)
+frm_notes.grid(row=0, column=1, rowspan=8, sticky="ns", padx=(8, 0))
+txt_notes = tk.Text(frm_notes, height=9, width=35, font=("Trebuchet MS", 8))
+txt_notes.grid(row=0, column=0)
+
+# Spara
+btn_save = ttk.Button(frm_today, text="Spara anteckning", padding=(30, 5))
+btn_save.grid(row=8, column=0, columnspan=2, pady=(8, 0))
 
 tk.mainloop()
