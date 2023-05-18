@@ -87,4 +87,21 @@ txt_notes.grid(row=0, column=0)
 btn_save = ttk.Button(frm_today, text="Spara anteckning", padding=(30, 5), command=save_notes)
 btn_save.grid(row=8, column=0, columnspan=2, pady=(8, 0))
 
+# Fliken 'Arkiv'
+if os.path.isfile('data.json'):
+    with open('data.json', 'r') as fileHandler:
+        data = json.load(fileHandler)
+    for notes in data:
+        frm_notecard = ttk.LabelFrame(frm_archive, text=str(notes['date']))
+        frm_notecard.pack(anchor="nw", expand=True, fill="both")
+        lbl_notecard_one = ttk.Label(frm_notecard, text=f"1. {notes['positive'][0]}")
+        lbl_notecard_one.pack(anchor="nw")
+        lbl_notecard_two = ttk.Label(frm_notecard, text=f"2. {notes['positive'][1]}")
+        lbl_notecard_two.pack(anchor="nw")
+        lbl_notecard_three = ttk.Label(frm_notecard, text=f"3. {notes['positive'][2]}")
+        lbl_notecard_three.pack(anchor="nw")
+        
+
+
+
 tk.mainloop()
