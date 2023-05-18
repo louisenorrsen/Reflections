@@ -1,5 +1,32 @@
 import tkinter as tk
+import os
+import json
 from tkinter import ttk, font
+from datetime import datetime
+
+
+def save_notes():
+    note = {
+        'date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
+        'positive': [
+            ent_one.get(),
+            ent_two.get(), 
+            ent_three.get()
+        ], 
+        'mindset': txt_mindset.get("1.0", tk.END), 
+        'daily_notes': txt_notes.get("1.0", tk.END)
+    }
+    if os.path.isfile('data.json'):
+        with open('data.json', 'r') as fileHandler:
+            data = json.load(fileHandler)
+    else:
+        data = []
+
+    data.append(note)
+
+    with open('data.json', 'w') as fileHandler:
+        json.dump(data, fileHandler)
+
 
 window = tk.Tk()
 window.title("Reflections")
@@ -28,7 +55,7 @@ notebook.add(frm_archive, text="Arkiv")
 
 # Fliken 'Idag'
 
-# Första kolumnen 
+# Första kolumnen
 style.configure("TLabelframe.Label", font=frame_text)
 frm_positive = ttk.LabelFrame(frm_today, text=" Tre positiva händelser från idag ", padding=10)
 frm_positive.grid(row=0, column=0, rowspan=4, sticky="nsew")
@@ -57,7 +84,7 @@ txt_notes = tk.Text(frm_notes, height=9, width=35, font=("Trebuchet MS", 10))
 txt_notes.grid(row=0, column=0)
 
 # Spara
-btn_save = ttk.Button(frm_today, text="Spara anteckning", padding=(30, 5))
+btn_save = ttk.Button(frm_today, text="Spara anteckning", padding=(30, 5), command=save_notes)
 btn_save.grid(row=8, column=0, columnspan=2, pady=(8, 0))
 
 tk.mainloop()
