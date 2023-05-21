@@ -3,6 +3,7 @@ import os
 import json
 from tkinter import ttk, font
 from datetime import datetime
+from notecard import Notecard
 
 class Notebook(ttk.Notebook):
     def __init__(self, parent):
@@ -20,14 +21,14 @@ class Notebook(ttk.Notebook):
     def create_today_tab(self):
         frm_today = ttk.Frame(self)        
         self.add(frm_today, text="Idag")
-
         self.create_today_widgets(frm_today)
 
     def create_archive_tab(self):
         frm_archive = tk.Canvas(self)
         self.add(frm_archive, text="Arkiv")
-        container = ttk.Frame(frm_archive)
-        frm_archive.create_window((0,0), window=container, anchor="nw")
+        self.container = ttk.Frame(frm_archive)
+        frm_archive.create_window((0,0), window=self.container, anchor="nw")
+        self.fetch_notes(self.container)
 
     def create_today_widgets(self, parent):
         frame_text = font.Font(family="Trebuchet MS", size=10, slant="italic")
@@ -81,5 +82,17 @@ class Notebook(ttk.Notebook):
 
         with open('data.json', 'w') as fileHandler:
             json.dump(data, fileHandler)
+
+        self.fetch_notes(self.container)
+
+    def fetch_notes(self, parent):
+        for child in parent.winfo_children():
+            child.destroy()
+
+        if os.path.isfile('data.json'):
+            with open('data.json', 'r') as fileHandler:
+                data = json.load(fileHandler)
+            for note in data:
+                Notecard(parent, note)
         
         
