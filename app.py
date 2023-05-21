@@ -1,8 +1,12 @@
 import tkinter as tk
 import os
 import json
+import webbrowser
 from tkinter import ttk, font
 from datetime import datetime
+
+def open_link(link):
+    webbrowser.open(link)
 
 def save_notes():
     note = {
@@ -29,8 +33,14 @@ def save_notes():
 window = tk.Tk()
 window.geometry("700x500")
 window.title("Reflections")
-window.iconbitmap("diary.ico")
+window.iconbitmap("writing.ico")
 style = ttk.Style()
+
+# Ikon och länken
+credit = ttk.Label(window, text="Diary icons created by Freepik - Flaticon", font=("Trebuchet MS", 8), style="Link.TLabel")
+credit.pack(anchor="nw")
+credit.bind("<Button-1>", lambda e: open_link("https://www.flaticon.com/free-icons/diary"))
+style.configure("Link.TLabel", foreground="blue")
 
 # Textvariabel
 tab_text = font.Font(family="Trebuchet MS", size=10, weight="bold")
@@ -54,9 +64,10 @@ scrollbar = ttk.Scrollbar(frm_archive, orient="vertical", command=container.yvie
 scrollbar.pack(side="right", fill="y")
 
 container.configure(yscrollcommand=scrollbar.set)
-container.bind("<Configure>", lambda e: container.configure(scrollregion=container.bbox("all")))
 inner_frame = ttk.Frame(container)
 container.create_window((0,0), window=inner_frame, anchor="nw")
+container.bind("<Configure>", lambda e: container.configure(scrollregion=container.bbox("all")))
+container.bind_all("MouseWheel", scrollbar)
 # Flikar
 style.configure("TNotebook.Tab", padding=(30, 5), font=tab_text)
 notebook.add(frm_today, text="Idag")
@@ -114,7 +125,5 @@ if os.path.isfile('data.json'):
         lbl_notecard_mindset.grid(row=3, column=0, sticky="nw")
         daily_note = ttk.Label(frm_notecard, text=f"Anteckning: {notes['daily_notes'].strip()}", width=80, wraplength=500)
         daily_note.grid(row=4, column=0, sticky="w", rowspan=5)
-
-
 
 tk.mainloop()
