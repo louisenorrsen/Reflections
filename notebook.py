@@ -24,10 +24,30 @@ class Notebook(ttk.Notebook):
         self.create_today_widgets(frm_today)
 
     def create_archive_tab(self):
-        frm_archive = tk.Canvas(self)
-        self.add(frm_archive, text="Arkiv")
-        self.container = ttk.Frame(frm_archive)
-        frm_archive.create_window((0,0), window=self.container, anchor="nw")
+        # Skapar yttre ram för att få scrollen att fungera
+        outer_frame = ttk.Frame(self)
+        outer_frame.pack(fill="both", expand=True)
+
+        # Skapar en Canvas som stödjer scroll
+        self.frm_archive = tk.Canvas(outer_frame)
+        self.frm_archive.pack(side="left", fill="both", expand=True)
+
+        # Skapar en inre ram att lägga innehållet i
+        self.container = ttk.Frame(self.frm_archive)
+        self.container.bind("<Configure>", self.update_content_height)
+        self.frm_archive.create_window((0,0), window=self.container, anchor="nw")
+
+        # Skapar en scrollbar
+        scrollbar = ttk.Scrollbar(outer_frame, orient="vertical", command=self.frm_archive.yview)
+        scrollbar.pack(side="right", fill="y")
+
+        self.frm_archive.configure(yscrollcommand=scrollbar.set)
+        self.frm_archive.bind_all("<MouseWheel>", lambda e: self.frm_archive.yview_scroll(int(-1*(e.delta/120)), "units"))
+        
+        # Lägger till fliken i Notebook
+        self.add(outer_frame, text="Arkiv")
+        
+        # Hämtar alla notes från JSON 
         self.fetch_notes(self.container)
 
     def create_today_widgets(self, parent):
@@ -94,5 +114,9 @@ class Notebook(ttk.Notebook):
                 data = json.load(fileHandler)
             for note in data:
                 Notecard(parent, note)
+
+    def update_content_height(self, event):
+        self.container.update_idletasks()
+        self.frm_archive.configure(scrollregion=self.frm_archive.bbox("all"))
         
         
