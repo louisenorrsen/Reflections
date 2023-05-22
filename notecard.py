@@ -7,7 +7,7 @@ class Notecard(ttk.LabelFrame):
         self.style = ttk.Style()
         card_text = font.Font(family="Trebuchet MS", size=10)
         self.style.configure("TLabel", font=card_text)
-        
+
         lbl_notecard_one = ttk.Label(self, text=f"1. {note['positive'][0]}")
         lbl_notecard_one.grid(row=0, column=0, columnspan=2, sticky="w")
         

@@ -12,8 +12,8 @@ class App(tk.Tk):
         self.iconbitmap(icon_url)
         self.style = ttk.Style()
 
-        self.style.configure("Link.TLabel", foreground="blue")
-        credit = ttk.Label(self, text="Diary icons created by Freepik - Flaticon", font=("Trebuchet MS", 8), style="Link.TLabel")
+        self.style.configure("Link.TLabel",font=("Trebuchet MS", 8, "underline", "bold"), foreground="orange")
+        credit = ttk.Label(self, text="Diary icons created by Freepik - Flaticon", cursor="hand2", style="Link.TLabel")
         credit.pack(anchor="nw")
         credit.bind("<Button-1>", lambda e: self.open_link("https://www.flaticon.com/free-icons/diary"))
 
@@ -25,5 +25,5 @@ class App(tk.Tk):
     def open_link(self, link):
         webbrowser.open(link)
 
-        
+
 App("Reflections", (700, 500), "writing.ico")
