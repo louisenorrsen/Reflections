@@ -103,6 +103,12 @@ class Notebook(ttk.Notebook):
         with open('data.json', 'w') as fileHandler:
             json.dump(data, fileHandler)
 
+        ent_one.delete(0, tk.END)
+        ent_two.delete(0, tk.END)
+        ent_three.delete(0, tk.END)
+        txt_mindset.delete("1.0", tk.END)
+        txt_notes.delete("1.0", tk.END)
+
         self.fetch_notes(self.container)
 
     def fetch_notes(self, parent):
