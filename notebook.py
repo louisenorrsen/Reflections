@@ -78,7 +78,7 @@ class Notebook(ttk.Notebook):
         txt_notes = tk.Text(frm_notes, height=10, width=35, font=("Trebuchet MS", 10), wrap="word")
         txt_notes.grid(row=0, column=0)
 
-        btn_save = ttk.Button(parent, text="Spara anteckning", padding=(30, 5), command=lambda: self.save_notes(ent_one, ent_two, ent_three, txt_mindset, txt_notes))
+        btn_save = tk.Button(parent, text="Spara anteckning", padx=30, pady=5, background="orange", relief="flat", command=lambda: self.save_notes(ent_one, ent_two, ent_three, txt_mindset, txt_notes))
         btn_save.grid(row=8, column=0, columnspan=2, pady=(8, 0))
 
     def save_notes(self, ent_one, ent_two, ent_three, txt_mindset, txt_notes):
