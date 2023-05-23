@@ -5,6 +5,8 @@ from tkinter import ttk, font
 from datetime import datetime
 from notecard import Notecard
 
+# TODO: fixa en "statistik"-tab med data som: antal dagar i rad, totalt antal dagar, totalt skrivna ord, mest använda orden
+
 class Notebook(ttk.Notebook):
     def __init__(self, parent, colors):
         super().__init__(parent)
@@ -83,6 +85,8 @@ class Notebook(ttk.Notebook):
         self.btn_save.grid(row=8, column=0, columnspan=2, pady=(8, 0))
 
     def save_notes(self, ent_one, ent_two, ent_three, txt_mindset, txt_notes):
+        # FIXME: spara inte om något av fälten är tomma
+        # FIXME: ge användaren en varning om något av fälten är tomma
         note = {
             'date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
             'positive': [
@@ -93,6 +97,7 @@ class Notebook(ttk.Notebook):
             'mindset': txt_mindset.get("1.0", tk.END), 
             'daily_notes': txt_notes.get("1.0", tk.END)
         }
+        # FIXME: om det redan finns en anteckning från den dagen, fråga användaren om den ska ersättas
         if os.path.isfile('data.json'):
             with open('data.json', 'r') as fileHandler:
                 data = json.load(fileHandler)

@@ -33,6 +33,7 @@ class App(tk.Tk):
         webbrowser.open(link)
 
     def change_color(self):
+        # FIXME: fixa så texten blir något mörkare än användaren har valt om det är en ljus färg (HLS?)
         new_colors = colorchooser.askcolor()[1]
         if new_colors:
             self.colors = new_colors
