@@ -34,11 +34,12 @@ class App(tk.Tk):
 
     def change_color(self):
         # FIXME: fixa så texten blir något mörkare än användaren har valt om det är en ljus färg (HLS?)
+        # FIXME: ändra knapparnas textfär beroende på bakgrundsfärgens nyans
         new_colors = colorchooser.askcolor()[1]
         if new_colors:
             self.colors = new_colors
-            self.notebook.update_colors(new_colors)
             self.credit.configure(foreground=self.colors)
             self.btn_color.configure(background=self.colors)
+            self.notebook.update_colors(new_colors)
         
 App("Reflections", (700, 500), "writing.ico")

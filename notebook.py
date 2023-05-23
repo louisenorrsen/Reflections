@@ -55,7 +55,7 @@ class Notebook(ttk.Notebook):
 
     def create_today_widgets(self, parent):
         frame_text = font.Font(family="Trebuchet MS", size=10, slant="italic")
-        self.style.configure("TLabelframe.Label", font=frame_text)
+        self.style.configure("TLabelframe.Label", font=frame_text, foreground=self.colors)
         frm_positive = ttk.LabelFrame(parent, text=" Tre positiva händelser från idag ", padding=10)
         frm_positive.grid(row=0, column=0, rowspan=4, sticky="nw", padx=20, pady=20)
         lbl_one = ttk.Label(frm_positive, text="1. ", font=("Trebuchet MS", 10))
@@ -138,4 +138,7 @@ class Notebook(ttk.Notebook):
         self.txt_mindset.configure(foreground=colors)
         self.txt_notes.configure(foreground=colors)
         self.btn_save.configure(background=colors)
+        self.style.configure("TLabelframe.Label", foreground=colors)
+        
+        
         
