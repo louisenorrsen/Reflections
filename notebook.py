@@ -6,10 +6,11 @@ from datetime import datetime
 from notecard import Notecard
 
 class Notebook(ttk.Notebook):
-    def __init__(self, parent):
+    def __init__(self, parent, colors):
         super().__init__(parent)
         self.style = ttk.Style()
         self.pack(anchor="nw", fill="both", expand=True, padx=10, pady=10)
+        self.colors = colors
         self.create_notebook_tabs()
 
     def create_notebook_tabs(self):
@@ -57,29 +58,29 @@ class Notebook(ttk.Notebook):
         frm_positive.grid(row=0, column=0, rowspan=4, sticky="nw", padx=20, pady=20)
         lbl_one = ttk.Label(frm_positive, text="1. ", font=("Trebuchet MS", 10))
         lbl_one.grid(row=0, column=0, pady=2)
-        ent_one = ttk.Entry(frm_positive, font=("Trebuchet MS", 10), width=32)
-        ent_one.grid(row=0, column=1, pady=2)
+        self.ent_one = ttk.Entry(frm_positive, font=("Trebuchet MS", 10), foreground=self.colors, width=32)
+        self.ent_one.grid(row=0, column=1, pady=2)
         lbl_two = ttk.Label(frm_positive, text="2. ", font=("Trebuchet MS", 10))
         lbl_two.grid(row=1, column=0, pady=2)
-        ent_two = ttk.Entry(frm_positive, font=("Trebuchet MS", 10), width=32)
-        ent_two.grid(row=1, column=1, pady=2)
+        self.ent_two = ttk.Entry(frm_positive, font=("Trebuchet MS", 10), foreground=self.colors, width=32)
+        self.ent_two.grid(row=1, column=1, pady=2)
         lbl_three = ttk.Label(frm_positive, text="3. ", font=("Trebuchet MS", 10))
         lbl_three.grid(row=2, column=0, pady=2)
-        ent_three = ttk.Entry(frm_positive, font=("Trebuchet MS", 10), width=32)
-        ent_three.grid(row=2, column=1, pady=2)
+        self.ent_three = ttk.Entry(frm_positive, font=("Trebuchet MS", 10), foreground=self.colors, width=32)
+        self.ent_three.grid(row=2, column=1, pady=2)
 
         frm_mindset = ttk.LabelFrame(parent, text=" Positivt mindset inför morgondagen ", padding=10)
         frm_mindset.grid(row=4, column=0, rowspan=2, sticky="nw", padx=20, pady=(0, 20))
-        txt_mindset = tk.Text(frm_mindset, height=2, width=35, font=("Trebuchet MS", 10))
-        txt_mindset.grid(row=0, column=0, pady=(2, 1))
+        self.txt_mindset = tk.Text(frm_mindset, height=2, width=35, font=("Trebuchet MS", 10), foreground=self.colors)
+        self.txt_mindset.grid(row=0, column=0, pady=(2, 1))
 
         frm_notes = ttk.LabelFrame(parent, text=" Dagboksanteckningar ", padding=10)
         frm_notes.grid(row=0, column=1, rowspan=8, sticky="ns", padx=20, pady=20)
-        txt_notes = tk.Text(frm_notes, height=10, width=35, font=("Trebuchet MS", 10), wrap="word")
-        txt_notes.grid(row=0, column=0)
+        self.txt_notes = tk.Text(frm_notes, height=10, width=35, font=("Trebuchet MS", 10), foreground=self.colors, wrap="word")
+        self.txt_notes.grid(row=0, column=0)
 
-        btn_save = tk.Button(parent, text="Spara anteckning", padx=30, pady=5, background="orange", relief="flat", command=lambda: self.save_notes(ent_one, ent_two, ent_three, txt_mindset, txt_notes))
-        btn_save.grid(row=8, column=0, columnspan=2, pady=(8, 0))
+        self.btn_save = tk.Button(parent, text="Spara anteckning", padx=30, pady=5, background=self.colors, relief="flat", command=lambda: self.save_notes(self.ent_one, self.ent_two, self.ent_three, self.txt_mindset, self.txt_notes))
+        self.btn_save.grid(row=8, column=0, columnspan=2, pady=(8, 0))
 
     def save_notes(self, ent_one, ent_two, ent_three, txt_mindset, txt_notes):
         note = {
@@ -124,5 +125,12 @@ class Notebook(ttk.Notebook):
     def update_content_height(self, event):
         self.container.update_idletasks()
         self.frm_archive.configure(scrollregion=self.frm_archive.bbox("all"))
-        
+
+    def update_colors(self, colors):
+        self.ent_one.configure(foreground=colors)
+        self.ent_two.configure(foreground=colors)
+        self.ent_one.configure(foreground=colors)
+        self.txt_mindset.configure(foreground=colors)
+        self.txt_notes.configure(foreground=colors)
+        self.btn_save.configure(background=colors)
         
