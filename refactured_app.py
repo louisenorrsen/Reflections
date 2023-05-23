@@ -21,7 +21,7 @@ class App(tk.Tk):
         self.credit.pack(side="left", anchor="nw", padx=10)
         self.credit.bind("<Button-1>", lambda e: self.open_link("https://www.flaticon.com/free-icons/diary"))
 
-        self.btn_color = tk.Button(frm_top, text="Change colors", relief="flat", background=self.colors, command=self.change_color)
+        self.btn_color = tk.Button(frm_top, text="Change colors", relief="groove", background=self.colors, command=self.change_color)
         self.btn_color.pack(side="right", padx=10)
 
         self.notebook = Notebook(self, self.colors)
@@ -34,7 +34,7 @@ class App(tk.Tk):
 
     def change_color(self):
         # FIXME: fixa så texten blir något mörkare än användaren har valt om det är en ljus färg (HLS?)
-        # FIXME: ändra knapparnas textfär beroende på bakgrundsfärgens nyans
+        # FIXME: ändra knapparnas textfärg beroende på bakgrundsfärgens nyans 
         new_colors = colorchooser.askcolor()[1]
         if new_colors:
             self.colors = new_colors
